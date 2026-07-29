@@ -8,6 +8,8 @@ package com.mycompany.proyectogrupo4;
  *
  * @author josue
  */
+import javax.swing.JOptionPane;
+
 public class Libro {
 
     private int idLibro;
@@ -15,6 +17,8 @@ public class Libro {
     private double precio;
     private Autor autor;
     private Categoria categoria;
+    private int cantidad;
+    private boolean disponible;
 
 
     // Constructor vacío
@@ -24,13 +28,20 @@ public class Libro {
 
 
     // Constructor con parámetros
-    public Libro(int idLibro, String titulo, double precio, Autor autor, Categoria categoria) {
+    public Libro(int idLibro, String titulo, double precio, int cantidad, Autor autor, Categoria categoria) {
 
         this.idLibro = idLibro;
         this.titulo = titulo;
         this.precio = precio;
+        this.cantidad = cantidad;
         this.autor = autor;
         this.categoria = categoria;
+
+        if (cantidad > 0) {
+            this.disponible = true;
+        } else {
+            this.disponible = false;
+        }
 
     }
 
@@ -90,15 +101,73 @@ public class Libro {
     }
 
 
+    // Getter cantidad
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    // Setter cantidad
+    public void setCantidad(int cantidad) {
+
+        this.cantidad = cantidad;
+
+        if (cantidad > 0) {
+            this.disponible = true;
+        } else {
+            this.disponible = false;
+        }
+
+    }
+
+
+    // Getter disponible
+    public boolean getDisponible() {
+        return disponible;
+    }
+
+    // Setter disponible
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
+    }
+
+
+    // Método para prestar libro
+    public void prestarLibro() {
+
+        if (cantidad > 0) {
+
+            cantidad--;
+
+            if (cantidad == 0) {
+                disponible = false;
+            }
+
+        }
+
+    }
+
+
+    // Método para devolver libro
+    public void devolverLibro() {
+
+        cantidad++;
+        disponible = true;
+
+    }
+
+
     // Método mostrar datos
     public void mostrarDatos() {
 
-        System.out.println("ID Libro: " + idLibro);
-        System.out.println("Título: " + titulo);
-        System.out.println("Precio: " + precio);
-
-        System.out.println("Autor: " + autor.getNombre());
-        System.out.println("Categoría: " + categoria.getNombre());
+        JOptionPane.showMessageDialog(null,
+                "ID Libro: " + idLibro
+                + "\nTítulo: " + titulo
+                + "\nPrecio: " + precio
+                + "\nCantidad disponible: " + cantidad
+                + "\nDisponible: " + disponible
+                + "\nAutor: " + autor.getNombre()
+                + "\nCategoría: " + categoria.getNombre()
+        );
 
     }
 
